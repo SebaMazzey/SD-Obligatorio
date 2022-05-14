@@ -1,20 +1,17 @@
-using Departamentos.DAL.EFCore.Core;
+using Departments.DAL.EFCore.Core;
+using Departments.DAL.EFCore.Repositories;
+using Departments_Core.Interfaces.Repositories;
+using Departments_Core.Interfaces.Services;
+using Departments_Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Departamentos_API
+namespace Departments_API
 {
     public class Startup
     {
@@ -34,9 +31,19 @@ namespace Departamentos_API
             });
             #endregion
 
+            #region Services Register
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IVoteService, VoteService>();
+            #endregion
+
+            #region Repositories Register
+            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IVoteRepository, VoteRepository>();
+            #endregion
+
             #region DbContext Register
             //This defines the connection string used for the DbContext
-            services.AddDbContext<DepartamentoContext>(c =>
+            services.AddDbContext<DepartmentContext>(c =>
                 c.UseMySQL(Configuration.GetConnectionString("DbConnection")));
             #endregion
 

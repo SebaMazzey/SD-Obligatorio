@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Departamentos_Core.Entidades
+namespace Departments_Core.Entities
 {
-    public class Persona
+    public class Person
     {
         [Key]
         public string CI { get; set; }
-        public bool VotoRealizado { get; set; }
+        public bool AlreadyVoted { get; set; }
     }
 }
