@@ -18,10 +18,19 @@ namespace Departments_Core.Services
             this._personRepository = personRepository;
         }
 
-        public Task<bool> AutenticateUser(string CI)
+        public Task<bool> VerifyUser(string ci)
         {
-            bool found = _personRepository.GetPersonByCI(CI) != 0;
-            return Task.FromResult(found);
+            var isAbleToVote = _personRepository.CountNotVotedUsersWithCI(ci) != 0;
+            return Task.FromResult(isAbleToVote);
+        }
+
+        public void MarkAsVoted(string ci)
+        {
+            this._personRepository.Update(new PersonEntity()
+            {
+                Ci = ci,
+                Already_Voted = true
+            });
         }
     }
 }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Interfaces.Repositories
 {
-    public interface IPersonRepository: IRepository<Person>
+    public interface IPersonRepository: IRepository<PersonEntity>
     {
-        public int GetPersonByCI(string CI);
+        public int CountNotVotedUsersWithCI(string ci);
     }
 }

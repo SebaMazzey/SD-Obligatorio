@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
-    public class Option
+    public class OptionEntity
     {
-        public Option()
+        public OptionEntity()
         {
-            Votes = new HashSet<Vote>();
+            Votes = new HashSet<VoteEntity>();
         }
 
         [Key]
         public string Name { get; set; }
 
-        public virtual ICollection<Vote> Votes { get; set; }
+        public virtual ICollection<VoteEntity> Votes { get; set; }
     }
 }

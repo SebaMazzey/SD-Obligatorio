@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
-    public class EnabledDevice
+    public class EnabledDeviceEntity
     {
         [Key]
         public string Code { get; set; }
         public int Circuit_Number { get; set; }
 
-        public virtual Circuit Circuit { get; set; }
+        public virtual CircuitEntity Circuit { get; set; }
     }
 }
