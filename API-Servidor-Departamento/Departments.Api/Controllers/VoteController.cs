@@ -11,7 +11,7 @@ using Departments_Core.Services.Dto;
 namespace Departments_API.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("[controller]")]
     public class VoteController : ControllerBase
     {
         private readonly IVoteService _voteService; 
@@ -35,7 +35,7 @@ namespace Departments_API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("/Results")]
         public ActionResult GetVotingResults()
         {
             try

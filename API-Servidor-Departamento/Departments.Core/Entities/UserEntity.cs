@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
-    public class PersonEntity
+    public class UserEntity
     {
         [Key]
+        [Column("ci")]
         public string Ci { get; set; }
-        public bool Already_Voted { get; set; }
+        [Column("already_voted")]
+        public bool AlreadyVoted { get; set; }
     }
 }

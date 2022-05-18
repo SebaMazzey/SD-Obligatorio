@@ -11,9 +11,12 @@ namespace Departments_Core.Entities
     public class VoteEntity
     {
         [Key]
+        [Column("id")]
         public int Id { get; set; }
-        public int Circuit_Number { get; set; }
-        public string Option_Name { get; set; }
+        [Column("circuit_number")]
+        public int CircuitNumber { get; set; }
+        [Column("option_name")]
+        public string OptionName { get; set; }
         public virtual OptionEntity Option { get; set; }
         public virtual CircuitEntity Circuit { get; set; }
     }

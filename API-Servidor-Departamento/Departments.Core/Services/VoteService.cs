@@ -13,26 +13,26 @@ namespace Departments_Core.Services
     public class VoteService : IVoteService
     {
         private readonly IVoteRepository _voteRepository;
-        private readonly IPersonService _personService;
+        private readonly IUserService _userService;
 
-        public VoteService(IVoteRepository voteRepository, IPersonService personService)
+        public VoteService(IVoteRepository voteRepository, IUserService userService)
         {
             this._voteRepository = voteRepository;
-            this._personService = personService;
+            this._userService = userService;
         }
 
         public void AddVote(Vote vote)
         {
             SaveVote(vote);
-            _personService.MarkAsVoted(vote.Ci);            
+            _userService.MarkAsVoted(vote.Ci);            
         }
 
         private void SaveVote(Vote vote)
         {
             _voteRepository.AddAsync(new VoteEntity
             {
-                Circuit_Number = vote.CircuitNumber,
-                Option_Name = vote.Option
+                CircuitNumber = vote.CircuitNumber,
+                OptionName = vote.Option
             });
         }
     }

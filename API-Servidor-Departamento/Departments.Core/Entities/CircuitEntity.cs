@@ -17,6 +17,7 @@ namespace Departments_Core.Entities
         }
 
         [Key]
+        [Column("number")]
         public int Number { get; set; }
         public virtual ICollection<VoteEntity> Votes { get; set; }
         public virtual ICollection<EnabledDeviceEntity> EnabledDevices { get; set; }

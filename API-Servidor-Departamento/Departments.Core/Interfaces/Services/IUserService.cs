@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Interfaces.Services
 {
-    public interface IPersonService
+    public interface IUserService
     {
         public Task<bool> VerifyUser(string ci);
 
