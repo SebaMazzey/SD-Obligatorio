@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
+    [Table("Options")]
     public class OptionEntity
     {
         public OptionEntity()
@@ -16,7 +17,7 @@ namespace Departments_Core.Entities
         }
 
         [Key]
-        [Column("name")]
+        [Column("Name")]
         public string Name { get; set; }
 
         public virtual ICollection<VoteEntity> Votes { get; set; }

@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
+    [Table("EnabledDevices")]
     public class EnabledDeviceEntity
     {
         [Key]
-        [Column("code")]
+        [Column("Code")]
         public string Code { get; set; }
-        [Column("circuit_number")]
+        [Column("Circuit_Number")]
         public int CircuitNumber { get; set; }
         public virtual CircuitEntity Circuit { get; set; }
     }

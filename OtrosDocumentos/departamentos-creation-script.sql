@@ -20,7 +20,7 @@ CREATE TABLE `Options` (
   PRIMARY KEY (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `Persons` (
+CREATE TABLE `Users` (
   `CI` varchar(64) NOT NULL,
   `AlreadyVoted` BOOLEAN NOT NULL,
   PRIMARY KEY (`CI`)
@@ -28,7 +28,6 @@ CREATE TABLE `Persons` (
 
 CREATE TABLE `Votes` (
   `Id` int NOT NULL AUTO_INCREMENT,
-  `Date` datetime NOT NULL,
   `Circuit_Number` int NOT NULL,
   `Option_Name` varchar(767) DEFAULT NULL,
   PRIMARY KEY (`Id`),

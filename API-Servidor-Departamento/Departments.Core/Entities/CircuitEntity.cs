@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
+    [Table("Circuits")]
     public class CircuitEntity
     {
         public CircuitEntity()
@@ -17,7 +18,7 @@ namespace Departments_Core.Entities
         }
 
         [Key]
-        [Column("number")]
+        [Column("Number")]
         public int Number { get; set; }
         public virtual ICollection<VoteEntity> Votes { get; set; }
         public virtual ICollection<EnabledDeviceEntity> EnabledDevices { get; set; }

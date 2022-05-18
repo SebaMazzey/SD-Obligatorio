@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
+    [Table("Votes")]
     public class VoteEntity
     {
         [Key]
-        [Column("id")]
+        [Column("Id")]
         public int Id { get; set; }
-        [Column("circuit_number")]
+        [Column("Circuit_Number")]
         public int CircuitNumber { get; set; }
-        [Column("option_name")]
+        [Column("Option_Name")]
         public string OptionName { get; set; }
         public virtual OptionEntity Option { get; set; }
         public virtual CircuitEntity Circuit { get; set; }
