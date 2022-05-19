@@ -12,7 +12,6 @@ namespace Departments_Core.Entities
     public class VoteEntity
     {
         [Key]
-        [Column("Id")]
         public int Id { get; set; }
         [Column("Circuit_Number")]
         public int CircuitNumber { get; set; }
