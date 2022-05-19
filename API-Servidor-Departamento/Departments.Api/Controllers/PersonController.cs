@@ -21,11 +21,11 @@ namespace Departments_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<bool>> AutenticateUser(string CI)
+        public async Task<ActionResult<bool>> VerifyUser(string ci)
         {
             try
             {
-                var result = await _personService.AutenticateUser(CI);
+                var result = await _personService.VerifyUser(ci);
                 return Ok(result);
             }
             catch (Exception ex)

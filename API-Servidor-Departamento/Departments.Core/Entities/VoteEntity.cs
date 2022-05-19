@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
-    public class Vote
+    public class VoteEntity
     {
         [Key]
         public int Id { get; set; }
-        public DateTime Date { get; set; }
         public int Circuit_Number { get; set; }
         public string Option_Name { get; set; }
-
-        public virtual Option Option { get; set; }
-        public virtual Circuit Circuit { get; set; }
+        public virtual OptionEntity Option { get; set; }
+        public virtual CircuitEntity Circuit { get; set; }
     }
 }

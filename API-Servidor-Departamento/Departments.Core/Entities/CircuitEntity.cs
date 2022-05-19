@@ -8,18 +8,17 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
-    public class Circuit
+    public class CircuitEntity
     {
-        public Circuit()
+        public CircuitEntity()
         {
-            Votes = new HashSet<Vote>();
-            EnabledDevices = new HashSet<EnabledDevice>();
+            Votes = new HashSet<VoteEntity>();
+            EnabledDevices = new HashSet<EnabledDeviceEntity>();
         }
 
         [Key]
         public int Number { get; set; }
-
-        public virtual ICollection<Vote> Votes { get; set; }
-        public virtual ICollection<EnabledDevice> EnabledDevices { get; set; }
+        public virtual ICollection<VoteEntity> Votes { get; set; }
+        public virtual ICollection<EnabledDeviceEntity> EnabledDevices { get; set; }
     }
 }
