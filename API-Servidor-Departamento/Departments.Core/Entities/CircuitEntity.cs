@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Entities
 {
+    [Table("Circuits")]
     public class CircuitEntity
     {
         public CircuitEntity()

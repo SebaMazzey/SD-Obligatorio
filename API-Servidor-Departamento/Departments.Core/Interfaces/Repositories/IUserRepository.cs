@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Interfaces.Repositories
 {
-    public interface IPersonRepository: IRepository<PersonEntity>
+    public interface IUserRepository: IRepository<UserEntity>
     {
         public int CountNotVotedUsersWithCI(string ci);
     }

@@ -22,7 +22,7 @@ namespace Departments.DAL.EFCore.Core
         public DbSet<CircuitEntity> Circuits { get; set; }
         public DbSet<EnabledDeviceEntity> EnabledDevices { get; set; }
         public DbSet<OptionEntity> Options { get; set; }
-        public DbSet<PersonEntity> Persons { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
         public DbSet<VoteEntity> Votes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -45,7 +45,7 @@ namespace Departments.DAL.EFCore.Core
             {
                 entity.HasOne(d => d.Circuit)
                     .WithMany(c => c.EnabledDevices)
-                    .HasForeignKey(d => d.Circuit_Number)
+                    .HasForeignKey(d => d.CircuitNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
@@ -53,12 +53,12 @@ namespace Departments.DAL.EFCore.Core
             {
             });
 
-            modelBuilder.Entity<PersonEntity>(entity =>
+            modelBuilder.Entity<UserEntity>(entity =>
             {
                 entity.Property(e => e.Ci)
                     .HasMaxLength(64);
 
-                entity.Property(e => e.Already_Voted)
+                entity.Property(e => e.AlreadyVoted)
                     .IsRequired(true);
             });
 
@@ -66,12 +66,12 @@ namespace Departments.DAL.EFCore.Core
             {
                 entity.HasOne(v => v.Circuit)
                     .WithMany(c => c.Votes)
-                    .HasForeignKey(v => v.Circuit_Number)
+                    .HasForeignKey(v => v.CircuitNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(v => v.Option)
                     .WithMany(o => o.Votes)
-                    .HasForeignKey(v => v.Option_Name)
+                    .HasForeignKey(v => v.OptionName)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
         }

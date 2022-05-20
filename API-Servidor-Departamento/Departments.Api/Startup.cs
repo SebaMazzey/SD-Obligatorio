@@ -32,12 +32,12 @@ namespace Departments_API
             #endregion
 
             #region Services Register
-            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IVoteService, VoteService>();
             #endregion
 
             #region Repositories Register
-            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVoteRepository, VoteRepository>();
             #endregion
 

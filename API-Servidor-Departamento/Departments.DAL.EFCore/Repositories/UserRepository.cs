@@ -10,13 +10,13 @@ using System.Transactions;
 
 namespace Departments.DAL.EFCore.Repositories
 {
-    public class PersonRepository: EfRepository<PersonEntity>, IPersonRepository
+    public class UserRepository: EfRepository<UserEntity>, IUserRepository
     {
-        public PersonRepository(DepartmentContext context): base(context) { }
+        public UserRepository(DepartmentContext context): base(context) { }
 
         public int CountNotVotedUsersWithCI(string ci)
         {
-            return this._dbContext.Persons.Count(p => p.Ci == ci && !p.Already_Voted);
+            return this._dbContext.Users.Count(p => p.Ci == ci && !p.AlreadyVoted);
         }
     }
 }

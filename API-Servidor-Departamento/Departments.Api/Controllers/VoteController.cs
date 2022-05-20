@@ -22,7 +22,7 @@ namespace Departments_API.Controllers
         }
 
         [HttpPost]
-        public ActionResult Vote(Vote vote)
+        public ActionResult Add(Vote vote)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace Departments_API.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetVotingResults()
+        public ActionResult Results()
         {
             try
             {
