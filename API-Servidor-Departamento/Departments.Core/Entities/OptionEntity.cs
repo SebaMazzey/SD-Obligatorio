@@ -17,7 +17,6 @@ namespace Departments_Core.Entities
         }
 
         [Key]
-        [Column("Name")]
         public string Name { get; set; }
 
         public virtual ICollection<VoteEntity> Votes { get; set; }

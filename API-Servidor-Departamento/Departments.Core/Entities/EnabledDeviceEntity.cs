@@ -12,7 +12,6 @@ namespace Departments_Core.Entities
     public class EnabledDeviceEntity
     {
         [Key]
-        [Column("Code")]
         public string Code { get; set; }
         [Column("Circuit_Number")]
         public int CircuitNumber { get; set; }
