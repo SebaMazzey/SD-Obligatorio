@@ -36,11 +36,12 @@ namespace Departments_API.Controllers
         }
 
         [HttpGet]
-        public ActionResult Results()
+        public ActionResult<Dictionary<string, int>> Results()
         {
             try
             {
-                return Ok("El Cuquito gano!");
+                var results = this._voteService.GetResults();
+                return Ok(results);
             }
             catch (Exception ex)
             {
