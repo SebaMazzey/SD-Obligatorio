@@ -20,7 +20,8 @@ namespace Departments_Core.Services
 
         public Task<bool> VerifyUser(string ci)
         {
-            var isAbleToVote = _userRepository.CountNotVotedUsersWithCI(ci) != 0;
+            var hashedCi = CryptoService.ComputeSha256Hash(ci);
+            var isAbleToVote = _userRepository.CountNotVotedUsersWithCI(hashedCi) != 0;
             return Task.FromResult(isAbleToVote);
         }
 
@@ -28,7 +29,7 @@ namespace Departments_Core.Services
         {
             this._userRepository.Update(new UserEntity()
             {
-                Ci = ci,
+                Ci = CryptoService.ComputeSha256Hash(ci),
                 AlreadyVoted = true
             });
         }

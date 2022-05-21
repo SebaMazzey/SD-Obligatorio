@@ -46,7 +46,7 @@ namespace Departments.DAL.EFCore.Core
                 entity.HasOne(d => d.Circuit)
                     .WithMany(c => c.EnabledDevices)
                     .HasForeignKey(d => d.CircuitNumber)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<OptionEntity>(entity =>
@@ -67,12 +67,12 @@ namespace Departments.DAL.EFCore.Core
                 entity.HasOne(v => v.Circuit)
                     .WithMany(c => c.Votes)
                     .HasForeignKey(v => v.CircuitNumber)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(v => v.Option)
                     .WithMany(o => o.Votes)
                     .HasForeignKey(v => v.OptionName)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

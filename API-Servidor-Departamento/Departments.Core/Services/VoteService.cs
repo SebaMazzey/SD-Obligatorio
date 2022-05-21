@@ -35,5 +35,11 @@ namespace Departments_Core.Services
                 OptionName = vote.Option
             });
         }
+
+        // TODO: Ver si se puede mejorar/emprolijar
+        public void Commit()
+        {
+            this._voteRepository.SaveChanges();
+        }
     }
 }

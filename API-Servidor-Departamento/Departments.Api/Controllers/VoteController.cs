@@ -14,11 +14,13 @@ namespace Departments_API.Controllers
     [Route("[controller]/[action]")]
     public class VoteController : ControllerBase
     {
+        private readonly ILogger<VoteController> _logger;
         private readonly IVoteService _voteService; 
 
-        public VoteController(IVoteService voteService)
+        public VoteController(IVoteService voteService, ILogger<VoteController> logger)
         {
             this._voteService = voteService;
+            this._logger = logger;
         }
 
         [HttpPost]
@@ -27,10 +29,13 @@ namespace Departments_API.Controllers
             try
             {
                 _voteService.AddVote(vote);
-                return Ok("El voto fue emitido con exito");
+                this._voteService.Commit();
+                _logger.LogInformation("New vote submitted");
+                return Ok("Vote successfully submitted");
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Unable to submit vote: {}", ex.Message);
                 return BadRequest(ex.Message);
             }
         }

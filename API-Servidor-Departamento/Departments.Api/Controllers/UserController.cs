@@ -13,11 +13,13 @@ namespace Departments_API.Controllers
     [Route("[controller]/[action]")]
     public class UserController : ControllerBase
     {
+        private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             this._userService = userService;
+            this._logger = logger;
         }
 
         [HttpGet]
@@ -30,6 +32,7 @@ namespace Departments_API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Unable to verify user: {}", ex.Message);
                 return BadRequest(ex.Message);
             }
         }
