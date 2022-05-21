@@ -24,6 +24,7 @@ namespace Departments.DAL.EFCore.Core
         public DbSet<OptionEntity> Options { get; set; }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<VoteEntity> Votes { get; set; }
+        public DbSet<TokenEntity> Tokens { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -73,6 +74,11 @@ namespace Departments.DAL.EFCore.Core
                     .WithMany(o => o.Votes)
                     .HasForeignKey(v => v.OptionName)
                     .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<TokenEntity>(entity =>
+            {
+                entity.HasOne(e => e.User);
             });
         }
     }

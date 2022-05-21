@@ -20,6 +20,7 @@ namespace Departments_Core.Services
 
         public Task<bool> VerifyUser(string ci)
         {
+            
             var isAbleToVote = _userRepository.CountNotVotedUsersWithCI(ci) != 0;
             return Task.FromResult(isAbleToVote);
         }

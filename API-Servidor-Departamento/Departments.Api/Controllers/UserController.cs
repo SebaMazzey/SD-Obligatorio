@@ -21,7 +21,7 @@ namespace Departments_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<bool>> Verify(string ci)
+        public async Task<ActionResult<string>> Verify(string ci)
         {
             try
             {

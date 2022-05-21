@@ -14,11 +14,13 @@ namespace Departments_API.Controllers
     [Route("[controller]/[action]")]
     public class VoteController : ControllerBase
     {
-        private readonly IVoteService _voteService; 
+        private readonly IVoteService _voteService;
+        private readonly ITokenService _tokenService;
 
-        public VoteController(IVoteService voteService)
+        public VoteController(IVoteService voteService, ITokenService tokenService)
         {
             this._voteService = voteService;
+            this._tokenService = tokenService;
         }
 
         [HttpPost]
@@ -26,8 +28,15 @@ namespace Departments_API.Controllers
         {
             try
             {
-                _voteService.AddVote(vote);
-                return Ok("El voto fue emitido con exito");
+                var hasToken = Request.Headers.TryGetValue("Auth-Token", out var token);
+                if (hasToken)
+                {
+                    _tokenService.VerifyToken(token, vote.Ci);
+                    _voteService.AddVote(vote);
+                    return Ok("El voto fue emitido con exito");
+                }
+
+                return BadRequest("Header=Auth-Token not found");
             }
             catch (Exception ex)
             {
