@@ -33,5 +33,19 @@ namespace Departments_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        public ActionResult<int> RemainingVotes()
+        {
+            try
+            {
+                var result = this._userService.CountRemainingVotes();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

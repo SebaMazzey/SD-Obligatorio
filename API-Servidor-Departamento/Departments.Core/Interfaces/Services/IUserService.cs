@@ -12,5 +12,6 @@ namespace Departments_Core.Interfaces.Services
         public Task<bool> VerifyUser(string ci);
 
         public void MarkAsVoted(string ci);
+        public int CountRemainingVotes();
     }
 }
