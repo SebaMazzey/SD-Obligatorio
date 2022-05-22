@@ -34,11 +34,13 @@ namespace Departments_API
             #region Services Register
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IVoteService, VoteService>();
+            services.AddScoped<ITokenService, TokenService>();
             #endregion
 
             #region Repositories Register
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVoteRepository, VoteRepository>();
+            services.AddScoped<ITokenRepository, TokenRepository>();
             #endregion
 
             #region DbContext Register

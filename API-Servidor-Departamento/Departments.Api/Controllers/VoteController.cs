@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Departments_Core.Services.Dto;
 
@@ -14,12 +15,14 @@ namespace Departments_API.Controllers
     [Route("[controller]/[action]")]
     public class VoteController : ControllerBase
     {
+        private readonly IVoteService _voteService;
+        private readonly ITokenService _tokenService;
         private readonly ILogger<VoteController> _logger;
-        private readonly IVoteService _voteService; 
 
-        public VoteController(IVoteService voteService, ILogger<VoteController> logger)
+        public VoteController(IVoteService voteService, ITokenService tokenService, ILogger<VoteController> logger)
         {
             this._voteService = voteService;
+            this._tokenService = tokenService;
             this._logger = logger;
         }
 
@@ -28,8 +31,11 @@ namespace Departments_API.Controllers
         {
             try
             {
-                _voteService.AddVote(vote);
-                _logger.LogInformation("New vote submitted");
+                var hasToken = Request.Headers.TryGetValue("Auth-Token", out var token);
+                if (!hasToken) { return BadRequest("Header='Auth-Token' not found"); }
+                
+                _voteService.AddVote(token, vote); 
+                _logger.LogInformation("New vote submitted"); 
                 return Ok("Vote successfully submitted");
             }
             catch (Exception ex)

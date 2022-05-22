@@ -14,17 +14,22 @@ namespace Departments_Core.Services
     {
         private readonly IVoteRepository _voteRepository;
         private readonly IUserService _userService;
+        private readonly ITokenService _tokenService;
 
-        public VoteService(IVoteRepository voteRepository, IUserService userService)
+        public VoteService(IVoteRepository voteRepository, IUserService userService, ITokenService tokenService)
         {
             this._voteRepository = voteRepository;
             this._userService = userService;
+            this._tokenService = tokenService;
         }
 
-        public void AddVote(Vote vote)
+        public void AddVote(string token , Vote vote)
         {
+            var hashedCi = CryptoService.ComputeSha256Hash(vote.Ci);
+            _tokenService.VerifyToken(token, hashedCi);
             SaveVote(vote);
-            _userService.MarkAsVoted(vote.Ci);
+            _userService.MarkAsVoted(hashedCi);
+            _tokenService.DeleteToken(token);
             this._voteRepository.SaveChanges();
         }
 

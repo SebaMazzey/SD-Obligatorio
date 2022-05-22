@@ -15,20 +15,25 @@ namespace Departments_API.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
-
-        public UserController(IUserService userService, ILogger<UserController> logger)
+        private readonly ITokenService _tokenService;
+        
+        public UserController(IUserService userService, ITokenService tokenService, ILogger<UserController> logger)
         {
             this._userService = userService;
+            this._tokenService = tokenService;
             this._logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<bool>> Verify(string ci)
+        public async Task<ActionResult<string>> Verify(string ci)
         {
             try
             {
-                var result = await _userService.VerifyUser(ci);
-                return Ok(result);
+                var isValid = await _userService.VerifyUser(ci);
+                if (!isValid) { return Unauthorized("User not able to vote"); }
+                
+                var token = _tokenService.CreateToken(ci);
+                return Ok(token);
             }
             catch (Exception ex)
             {

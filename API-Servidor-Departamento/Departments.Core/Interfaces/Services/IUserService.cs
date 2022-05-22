@@ -10,8 +10,7 @@ namespace Departments_Core.Interfaces.Services
     public interface IUserService
     {
         public Task<bool> VerifyUser(string ci);
-
-        public void MarkAsVoted(string ci);
+        public void MarkAsVoted(string hashedCi);
         public int CountRemainingVotes();
     }
 }
