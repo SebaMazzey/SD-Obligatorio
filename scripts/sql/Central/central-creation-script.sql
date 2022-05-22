@@ -1,4 +1,4 @@
--- Script de creación de base de datos para cada departamento
+-- Script de creación de base de datos para el servidor central
 CREATE DATABASE IF NOT EXISTS `Central`;
 USE `Central`;
 
