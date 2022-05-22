@@ -9,11 +9,8 @@ using System.Threading.Tasks;
 
 namespace Departments.DAL.EFCore.Repositories
 {
-    public class VoteRepository: EfRepository<Vote>, IVoteRepository
+    public class VoteRepository: EfRepository<VoteEntity>, IVoteRepository
     {
-        public VoteRepository(DepartmentContext context) : base(context)
-        {
-
-        }
+        public VoteRepository(DepartmentContext context) : base(context) { }
     }
 }

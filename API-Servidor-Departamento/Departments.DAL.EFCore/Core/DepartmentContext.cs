@@ -19,11 +19,11 @@ namespace Departments.DAL.EFCore.Core
             _configuration = configuration;
         }
 
-        public DbSet<Circuit> Circuits { get; set; }
-        public DbSet<EnabledDevice> EnabledDevices { get; set; }
-        public DbSet<Option> Options { get; set; }
-        public DbSet<Person> Persons { get; set; }
-        public DbSet<Vote> Votes { get; set; }
+        public DbSet<CircuitEntity> Circuits { get; set; }
+        public DbSet<EnabledDeviceEntity> EnabledDevices { get; set; }
+        public DbSet<OptionEntity> Options { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<VoteEntity> Votes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -35,43 +35,43 @@ namespace Departments.DAL.EFCore.Core
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Circuit>(entity =>
+            modelBuilder.Entity<CircuitEntity>(entity =>
             {
                 entity.Property(e => e.Number)
                     .ValueGeneratedNever();
             });
 
-            modelBuilder.Entity<EnabledDevice>(entity =>
+            modelBuilder.Entity<EnabledDeviceEntity>(entity =>
             {
                 entity.HasOne(d => d.Circuit)
                     .WithMany(c => c.EnabledDevices)
-                    .HasForeignKey(d => d.Circuit_Number)
+                    .HasForeignKey(d => d.CircuitNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
-            modelBuilder.Entity<Option>(entity =>
+            modelBuilder.Entity<OptionEntity>(entity =>
             {
             });
 
-            modelBuilder.Entity<Person>(entity =>
+            modelBuilder.Entity<UserEntity>(entity =>
             {
-                entity.Property(e => e.CI)
+                entity.Property(e => e.Ci)
                     .HasMaxLength(64);
 
                 entity.Property(e => e.AlreadyVoted)
                     .IsRequired(true);
             });
 
-            modelBuilder.Entity<Vote>(entity =>
+            modelBuilder.Entity<VoteEntity>(entity =>
             {
                 entity.HasOne(v => v.Circuit)
                     .WithMany(c => c.Votes)
-                    .HasForeignKey(v => v.Circuit_Number)
+                    .HasForeignKey(v => v.CircuitNumber)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(v => v.Option)
                     .WithMany(o => o.Votes)
-                    .HasForeignKey(v => v.Option_Name)
+                    .HasForeignKey(v => v.OptionName)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
         }

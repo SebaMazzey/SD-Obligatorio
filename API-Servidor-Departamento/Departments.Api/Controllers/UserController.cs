@@ -11,21 +11,21 @@ namespace Departments_API.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class PersonController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IPersonService _personService;
+        private readonly IUserService _userService;
 
-        public PersonController(IPersonService personService)
+        public UserController(IUserService userService)
         {
-            this._personService = personService;
+            this._userService = userService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<bool>> AutenticateUser(string CI)
+        public async Task<ActionResult<bool>> Verify(string ci)
         {
             try
             {
-                var result = await _personService.AutenticateUser(CI);
+                var result = await _userService.VerifyUser(ci);
                 return Ok(result);
             }
             catch (Exception ex)

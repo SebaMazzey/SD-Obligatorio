@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Interfaces.Services
 {
-    public interface IPersonService
+    public interface IUserService
     {
-        public Task<bool> AutenticateUser(string CI);
+        public Task<bool> VerifyUser(string ci);
+
+        public void MarkAsVoted(string ci);
     }
 }

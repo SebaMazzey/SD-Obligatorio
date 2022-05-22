@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Departments_Core.Interfaces.Repositories
 {
-    public interface IVoteRepository: IRepository<Vote>
+    public interface IVoteRepository: IRepository<VoteEntity>
     {
     }
 }
