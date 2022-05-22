@@ -20,7 +20,7 @@ namespace Departments.DAL.EFCore.Repositories
                 t.Token.Equals(token) && t.Ci.Equals(ci))
                 .Select(t => t)
                 .AsNoTracking()
-                .First();
+                .FirstOrDefault();
         }
 
         public void DeleteTokensWithCi(string ci)
