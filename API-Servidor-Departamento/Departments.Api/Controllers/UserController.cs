@@ -14,10 +14,12 @@ namespace Departments_API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ITokenService _tokenService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ITokenService tokenService)
         {
             this._userService = userService;
+            this._tokenService = tokenService;
         }
 
         [HttpGet]
@@ -25,8 +27,15 @@ namespace Departments_API.Controllers
         {
             try
             {
-                var result = await _userService.VerifyUser(ci);
-                return Ok(result);
+                var isValid = await _userService.VerifyUser(ci);
+                if (isValid)
+                {
+                    string token = _tokenService.CreateToken(ci);
+                    this._tokenService.SaveChanges();
+                    return Ok(token);                    
+                }
+
+                return Unauthorized("User not able to vote");
             }
             catch (Exception ex)
             {

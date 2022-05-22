@@ -29,6 +29,11 @@ namespace Departments_Core.Services
             _userService.MarkAsVoted(vote.Ci);            
         }
 
+        public void SaveChanges()
+        {
+            this._voteRepository.SaveChanges();
+        }
+
         private void SaveVote(Vote vote)
         {
             _voteRepository.AddAsync(new VoteEntity

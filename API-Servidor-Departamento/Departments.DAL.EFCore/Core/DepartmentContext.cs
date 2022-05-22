@@ -78,7 +78,6 @@ namespace Departments.DAL.EFCore.Core
 
             modelBuilder.Entity<TokenEntity>(entity =>
             {
-                entity.HasOne(e => e.User);
             });
         }
     }

@@ -4,6 +4,8 @@ namespace Departments_Core.Interfaces.Repositories
 {
     public interface ITokenRepository : IRepository<TokenEntity>
     {
-        int TokenIsValid(string token, string ci);
+        TokenEntity FindValidToken(string token, string ci);
+        void DeleteTokensWithCi(string ci);
+        void DeleteToken(string token);
     }
 }

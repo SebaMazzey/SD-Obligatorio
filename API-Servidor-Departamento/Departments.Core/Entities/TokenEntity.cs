@@ -12,6 +12,5 @@ namespace Departments_Core.Entities
         public string Ci { get; set; }
         [Column("Expiration_Date")]
         public DateTime ExpirationDate { get; set; }
-        public virtual UserEntity User { get; set; }
     }
 }

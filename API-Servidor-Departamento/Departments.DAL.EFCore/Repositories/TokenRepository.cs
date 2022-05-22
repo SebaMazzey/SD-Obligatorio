@@ -3,6 +3,10 @@ using Departments_Core.Entities;
 using Departments_Core.Interfaces.Repositories;
 using Departments.DAL.EFCore.Core;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using MySql.Data.Types;
+using MySql.EntityFrameworkCore.Extensions;
 
 namespace Departments.DAL.EFCore.Repositories
 {
@@ -12,9 +16,24 @@ namespace Departments.DAL.EFCore.Repositories
         {
         }
         
-        public int TokenIsValid(string token, string ci)
+        public TokenEntity FindValidToken(string token, string ci)
         {
-            return this._dbContext.Tokens.Count(t => t.Token.Equals(token) && t.Ci.Equals(ci) && t.ExpirationDate > DateTime.Now);
+            return this._dbContext.Tokens.Where(t =>
+                t.Token.Equals(token) && t.Ci.Equals(ci))
+                .Select(t => t)
+                .First();
+        }
+
+        public void DeleteTokensWithCi(string ci)
+        {
+            this._dbContext.Tokens.RemoveRange(this._dbContext.Tokens.Where(e => e.Ci.Equals(ci)));
+        }
+
+        public void DeleteToken(string token)
+        {
+            TokenEntity entity = new TokenEntity() { Token = token };
+            this._dbContext.Tokens.Attach(entity);
+            this._dbContext.Remove(entity);
         }
     }
 }

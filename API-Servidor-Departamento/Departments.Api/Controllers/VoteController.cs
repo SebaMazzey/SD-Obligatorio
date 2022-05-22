@@ -33,6 +33,9 @@ namespace Departments_API.Controllers
                 {
                     _tokenService.VerifyToken(token, vote.Ci);
                     _voteService.AddVote(vote);
+                    _tokenService.DeleteToken(token);
+                    _tokenService.SaveChanges();
+                    _voteService.SaveChanges();
                     return Ok("El voto fue emitido con exito");
                 }
 
