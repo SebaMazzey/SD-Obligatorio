@@ -9,5 +9,6 @@ namespace Departments_Core.Interfaces.Repositories
 {
     public interface IVoteRepository: IRepository<VoteEntity>
     {
+        Dictionary<string, int> CountVotingResults();
     }
 }

@@ -28,6 +28,11 @@ namespace Departments_Core.Services
             this._voteRepository.SaveChanges();
         }
 
+        public Dictionary<string, int> GetResults()
+        {
+            return _voteRepository.CountVotingResults();
+        }
+
         private void SaveVote(Vote vote)
         {
             _voteRepository.AddAsync(new VoteEntity

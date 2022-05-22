@@ -33,5 +33,10 @@ namespace Departments_Core.Services
                 AlreadyVoted = true
             });
         }
+
+        public int CountRemainingVotes()
+        {
+            return this._userRepository.CountRemainingVotes();
+        }
     }
 }

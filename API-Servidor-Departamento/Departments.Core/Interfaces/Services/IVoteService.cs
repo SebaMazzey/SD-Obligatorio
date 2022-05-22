@@ -10,5 +10,6 @@ namespace Departments_Core.Interfaces.Services
     public interface IVoteService
     {
         void AddVote(Vote vote);
+        Dictionary<string, int> GetResults();
     }
 }
