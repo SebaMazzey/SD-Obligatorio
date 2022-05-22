@@ -36,9 +36,10 @@ namespace Departments_Core.Services
 
         public string CreateToken(string ci)
         {
-            this._tokenRepository.DeleteTokensWithCi(ci);
+            var hashedCi = CryptoService.ComputeSha256Hash(ci);
+            this._tokenRepository.DeleteTokensWithCi(hashedCi);
             var token = Guid.NewGuid().ToString();
-            SaveToken(token, ci);
+            SaveToken(token, hashedCi);
             this._tokenRepository.SaveChanges();
             return token;
         }

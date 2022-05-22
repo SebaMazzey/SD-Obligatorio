@@ -25,9 +25,10 @@ namespace Departments_Core.Services
 
         public void AddVote(string token , Vote vote)
         {
-            _tokenService.VerifyToken(token, vote.Ci);
+            var hashedCi = CryptoService.ComputeSha256Hash(vote.Ci);
+            _tokenService.VerifyToken(token, hashedCi);
             SaveVote(vote);
-            _userService.MarkAsVoted(vote.Ci);
+            _userService.MarkAsVoted(hashedCi);
             _tokenService.DeleteToken(token);
             this._voteRepository.SaveChanges();
         }

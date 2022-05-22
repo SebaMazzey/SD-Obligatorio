@@ -75,10 +75,6 @@ namespace Departments.DAL.EFCore.Core
                     .HasForeignKey(v => v.OptionName)
                     .OnDelete(DeleteBehavior.Restrict);
             });
-
-            modelBuilder.Entity<TokenEntity>(entity =>
-            {
-            });
         }
     }
 }

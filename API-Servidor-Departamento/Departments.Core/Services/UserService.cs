@@ -25,11 +25,11 @@ namespace Departments_Core.Services
             return Task.FromResult(isAbleToVote);
         }
 
-        public void MarkAsVoted(string ci)
+        public void MarkAsVoted(string hashedCi)
         {
             this._userRepository.Update(new UserEntity()
             {
-                Ci = CryptoService.ComputeSha256Hash(ci),
+                Ci = hashedCi,
                 AlreadyVoted = true
             });
         }
