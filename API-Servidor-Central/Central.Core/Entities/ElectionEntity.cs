@@ -19,8 +19,10 @@ namespace Central.Core.Entities
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime Start_Date { get; set; }
-        public DateTime End_Date { get; set; }
+        [Column("Start_Date")]
+        public DateTime StartDate { get; set; }
+        [Column("End_Date")]
+        public DateTime EndDate { get; set; }
         public ICollection<OptionEntity> Options { get; set; }
     }
 }
