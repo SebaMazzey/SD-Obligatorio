@@ -29,7 +29,6 @@ namespace Departments_API.Controllers
             try
             {
                 _voteService.AddVote(vote);
-                this._voteService.Commit();
                 _logger.LogInformation("New vote submitted");
                 return Ok("Vote successfully submitted");
             }

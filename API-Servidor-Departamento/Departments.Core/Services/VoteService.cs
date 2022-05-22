@@ -24,7 +24,8 @@ namespace Departments_Core.Services
         public void AddVote(Vote vote)
         {
             SaveVote(vote);
-            _userService.MarkAsVoted(vote.Ci);            
+            _userService.MarkAsVoted(vote.Ci);
+            this._voteRepository.SaveChanges();
         }
 
         private void SaveVote(Vote vote)
@@ -34,12 +35,6 @@ namespace Departments_Core.Services
                 CircuitNumber = vote.CircuitNumber,
                 OptionName = vote.Option
             });
-        }
-
-        // TODO: Ver si se puede mejorar/emprolijar
-        public void Commit()
-        {
-            this._voteRepository.SaveChanges();
         }
     }
 }
