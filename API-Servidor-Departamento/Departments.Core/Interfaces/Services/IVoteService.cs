@@ -9,7 +9,7 @@ namespace Departments_Core.Interfaces.Services
 {
     public interface IVoteService
     {
-        void AddVote(Vote vote);
-        void SaveChanges();
+        void AddVote(string token, Vote vote);
+        Dictionary<string, int> GetResults();
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Departments_Core.Services.Dto;
 
@@ -16,11 +17,13 @@ namespace Departments_API.Controllers
     {
         private readonly IVoteService _voteService;
         private readonly ITokenService _tokenService;
+        private readonly ILogger<VoteController> _logger;
 
-        public VoteController(IVoteService voteService, ITokenService tokenService)
+        public VoteController(IVoteService voteService, ITokenService tokenService, ILogger<VoteController> logger)
         {
             this._voteService = voteService;
             this._tokenService = tokenService;
+            this._logger = logger;
         }
 
         [HttpPost]
@@ -29,30 +32,26 @@ namespace Departments_API.Controllers
             try
             {
                 var hasToken = Request.Headers.TryGetValue("Auth-Token", out var token);
-                if (hasToken)
-                {
-                    _tokenService.VerifyToken(token, vote.Ci);
-                    _voteService.AddVote(vote);
-                    _tokenService.DeleteToken(token);
-                    _tokenService.SaveChanges();
-                    _voteService.SaveChanges();
-                    return Ok("El voto fue emitido con exito");
-                }
-
-                return BadRequest("Header=Auth-Token not found");
+                if (!hasToken) { return BadRequest("Header='Auth-Token' not found"); }
+                
+                _voteService.AddVote(token, vote); 
+                _logger.LogInformation("New vote submitted"); 
+                return Ok("Vote successfully submitted");
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Unable to submit vote: {}", ex.Message);
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
-        public ActionResult Results()
+        public ActionResult<Dictionary<string, int>> Results()
         {
             try
             {
-                return Ok("El Cuquito gano!");
+                var results = this._voteService.GetResults();
+                return Ok(results);
             }
             catch (Exception ex)
             {

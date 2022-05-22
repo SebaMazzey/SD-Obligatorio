@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Departments_Core.Interfaces.Repositories;
 
 namespace Departments.DAL.EFCore.Core
 {

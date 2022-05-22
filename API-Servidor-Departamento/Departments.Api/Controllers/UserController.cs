@@ -13,13 +13,15 @@ namespace Departments_API.Controllers
     [Route("[controller]/[action]")]
     public class UserController : ControllerBase
     {
+        private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
         private readonly ITokenService _tokenService;
-
-        public UserController(IUserService userService, ITokenService tokenService)
+        
+        public UserController(IUserService userService, ITokenService tokenService, ILogger<UserController> logger)
         {
             this._userService = userService;
             this._tokenService = tokenService;
+            this._logger = logger;
         }
 
         [HttpGet]
@@ -28,14 +30,25 @@ namespace Departments_API.Controllers
             try
             {
                 var isValid = await _userService.VerifyUser(ci);
-                if (isValid)
-                {
-                    string token = _tokenService.CreateToken(ci);
-                    this._tokenService.SaveChanges();
-                    return Ok(token);                    
-                }
+                if (!isValid) { return Unauthorized("User not able to vote"); }
+                
+                var token = _tokenService.CreateToken(ci);
+                return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unable to verify user: {}", ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
 
-                return Unauthorized("User not able to vote");
+        [HttpGet]
+        public ActionResult<int> RemainingVotes()
+        {
+            try
+            {
+                var result = this._userService.CountRemainingVotes();
+                return Ok(result);
             }
             catch (Exception ex)
             {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Departments_Core.Interfaces
+namespace Departments_Core.Interfaces.Repositories
 {
     public interface IRepository<T>
     {

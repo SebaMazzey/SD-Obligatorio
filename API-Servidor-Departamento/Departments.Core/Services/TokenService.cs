@@ -24,32 +24,33 @@ namespace Departments_Core.Services
             } 
             if (tokenEntity.ExpirationDate <= DateTime.Now)
             {
-                DeleteToken(token);
+                this._tokenRepository.Delete(tokenEntity);
                 throw new AuthenticationException("Expired token");
             }
         }
 
         public void DeleteToken(string token)
         {
-            this._tokenRepository.DeleteToken(token);
+            this._tokenRepository.Delete(new TokenEntity() { Token = token });
         }
 
         public string CreateToken(string ci)
         {
             this._tokenRepository.DeleteTokensWithCi(ci);
             var token = Guid.NewGuid().ToString();
+            SaveToken(token, ci);
+            this._tokenRepository.SaveChanges();
+            return token;
+        }
+
+        private void SaveToken(string token, string ci)
+        {
             _tokenRepository.AddAsync(new TokenEntity()
             {
                 Ci = ci,
                 Token = token,
                 ExpirationDate = DateTime.Now.AddMinutes(5)
             });
-            return token;
-        }
-
-        public void SaveChanges()
-        {
-            this._tokenRepository.SaveChanges();
         }
     }
 }

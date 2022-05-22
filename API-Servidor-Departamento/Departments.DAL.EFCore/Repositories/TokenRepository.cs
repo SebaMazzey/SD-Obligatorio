@@ -12,28 +12,20 @@ namespace Departments.DAL.EFCore.Repositories
 {
     public class TokenRepository : EfRepository<TokenEntity>, ITokenRepository
     {
-        public TokenRepository(DepartmentContext context) : base(context)
-        {
-        }
+        public TokenRepository(DepartmentContext context) : base(context) { }
         
         public TokenEntity FindValidToken(string token, string ci)
         {
             return this._dbContext.Tokens.Where(t =>
                 t.Token.Equals(token) && t.Ci.Equals(ci))
                 .Select(t => t)
+                .AsNoTracking()
                 .First();
         }
 
         public void DeleteTokensWithCi(string ci)
         {
             this._dbContext.Tokens.RemoveRange(this._dbContext.Tokens.Where(e => e.Ci.Equals(ci)));
-        }
-
-        public void DeleteToken(string token)
-        {
-            TokenEntity entity = new TokenEntity() { Token = token };
-            this._dbContext.Tokens.Attach(entity);
-            this._dbContext.Remove(entity);
         }
     }
 }

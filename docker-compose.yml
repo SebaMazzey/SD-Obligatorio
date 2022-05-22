@@ -8,4 +8,4 @@ services:
   ports:
     - 3307:3306
   volumes:
-    - ./sql/Departamentos/:/docker-entrypoint-initdb.d/
+    - ./scripts/sql/Departamentos/:/docker-entrypoint-initdb.d/

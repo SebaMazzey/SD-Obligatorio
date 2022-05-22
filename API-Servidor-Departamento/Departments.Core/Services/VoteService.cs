@@ -23,15 +23,18 @@ namespace Departments_Core.Services
             this._tokenService = tokenService;
         }
 
-        public void AddVote(Vote vote)
+        public void AddVote(string token , Vote vote)
         {
+            _tokenService.VerifyToken(token, vote.Ci);
             SaveVote(vote);
-            _userService.MarkAsVoted(vote.Ci);            
+            _userService.MarkAsVoted(vote.Ci);
+            _tokenService.DeleteToken(token);
+            this._voteRepository.SaveChanges();
         }
 
-        public void SaveChanges()
+        public Dictionary<string, int> GetResults()
         {
-            this._voteRepository.SaveChanges();
+            return _voteRepository.CountVotingResults();
         }
 
         private void SaveVote(Vote vote)
