@@ -23,7 +23,7 @@ namespace Central.DAL.EFCore.Core
             _configuration = configuration;
         }
 
-        public DbSet<DepartamentalVoteEntity> DepartamentalVotes { get; set; }
+        public DbSet<DepartmentalVoteEntity> DepartamentalVotes { get; set; }
         public DbSet<DepartmentEntity> Departments { get; set; }
         public DbSet<ElectionEntity> Elections { get; set; }
         public DbSet<OptionEntity> Options { get; set; }
@@ -38,7 +38,7 @@ namespace Central.DAL.EFCore.Core
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DepartamentalVoteEntity>(entity =>
+            modelBuilder.Entity<DepartmentalVoteEntity>(entity =>
             {
                 entity.HasKey(dv => new { dv.DepartmentName, dv.OptionName });
 

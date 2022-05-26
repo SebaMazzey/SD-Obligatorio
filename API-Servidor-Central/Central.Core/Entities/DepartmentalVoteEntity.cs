@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Central.Core.Entities
 {
-    [Table("DepartamentalVotes")]
-    public class DepartamentalVoteEntity
+    [Table("DepartmentalVotes")]
+    public class DepartmentalVoteEntity
     {
         [Column("Option_Name")]
         public string OptionName { get; set; }

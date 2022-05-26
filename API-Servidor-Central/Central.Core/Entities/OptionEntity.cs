@@ -13,7 +13,7 @@ namespace Central.Core.Entities
     {
         public OptionEntity()
         {
-            DepartamentalVotes = new HashSet<DepartamentalVoteEntity>();
+            DepartamentalVotes = new HashSet<DepartmentalVoteEntity>();
         }
 
         [Key, MaxLength(100)]
@@ -23,6 +23,6 @@ namespace Central.Core.Entities
         [Column("Election_Id")]
         public int ElectionId { get; set; }
         public ElectionEntity Election { get; set; }
-        public ICollection<DepartamentalVoteEntity> DepartamentalVotes { get; set; }
+        public ICollection<DepartmentalVoteEntity> DepartamentalVotes { get; set; }
     }
 }

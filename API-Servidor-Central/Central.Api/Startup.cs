@@ -13,6 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Central.Core.Interfaces.Repositories;
+using Central.Core.Interfaces.Services;
+using Central.Core.Services;
+using Central.DAL.EFCore.Repositories;
+using Central.DAL.EFCore.Util;
 
 namespace Central.Api
 {
@@ -35,11 +40,27 @@ namespace Central.Api
             #endregion
 
             #region Services Register
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IElectionService, ElectionService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            #endregion
+
+            #region Http Client Register
+
+            foreach (var config in Configuration.GetValue<DepartmentsConfiguration>("DepartmentsConfiguration").Values)
+            {
+                if (config.Active)
+                {
+                    services.AddHttpClient<IDepartmentClient, DepartmentClient>(client =>
+                        client.BaseAddress = new Uri(config.Domain));    
+                }
+            }
+
             #endregion
 
             #region Repositories Register
-            //services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IElectionRepository, ElectionRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IDepartmentalVoteRepository, DepartmentalVoteRepository>();
             #endregion
 
             #region DbContext Register
