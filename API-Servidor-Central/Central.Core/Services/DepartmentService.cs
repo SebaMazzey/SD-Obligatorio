@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Central.Core.Entities;
 using Central.Core.Interfaces.Repositories;
 using Central.Core.Interfaces.Services;
+using Central.Core.Interfaces.Services.Clients;
 using Central.Core.Services.Dto;
 
 namespace Central.Core.Services
@@ -12,54 +13,54 @@ namespace Central.Core.Services
     public class DepartmentService : IDepartmentService
     {
         private readonly IDepartmentRepository _departmentRepository;
-        private readonly IDepartmentalVoteRepository _departmentalVoteRepository;
+        private readonly IDepartmentalVoteService _departmentalVotesServices;
+        private readonly IEnumerable<IDepartmentClient> _departmentClients;
 
-        public DepartmentService(IDepartmentRepository departmentRepository, IDepartmentalVoteRepository departmentalVoteRepository)
+        public DepartmentService(IDepartmentRepository departmentRepository, IDepartmentalVoteService departmentalVoteService, IEnumerable<IDepartmentClient> departmentClients)
         {
             this._departmentRepository = departmentRepository;
-            this._departmentalVoteRepository = departmentalVoteRepository;
+            this._departmentalVotesServices = departmentalVoteService;
+            this._departmentClients = departmentClients;
         }
 
-        public async Task<DepartmentsVoteResults> UpdateAllDepartmentVotes()
+        public DepartmentsVoteResults GetAllDepartmentVotes(int electionId, bool forceUpdate)
         {
-            var departmentsResults = await this.GetAllDepartmentsVotes();
-            return MapDepartmentsResults(departmentsResults);
+            if (!forceUpdate)
+            {
+                // Si el resultado ya fue obtenido anteriormente, se obtiene de la base de datos
+                var departmentsResults = this._departmentalVotesServices.GetDepartmentVoteResults(electionId);
+                if (departmentsResults.Count != 0) { return departmentsResults; }
+            }
+            else { this._departmentalVotesServices.DeleteDepartamentalVotes(electionId); }
+
+            // Sino se obtienen los nuevos resultados y se persisten
+            var newDepartmentResults = this.FetchAllDepartmentsVotes();
+            this._departmentRepository.SaveChanges();
+            return MapDepartmentsResults(newDepartmentResults);
         }
 
-        private async Task<DepartmentVoteResults[]> GetAllDepartmentsVotes()
+        private IEnumerable<DepartmentVoteResults> FetchAllDepartmentsVotes()
         {
-            var departments = await this._departmentRepository.ListAllAsync();
-            
-            var getVoteResultsTaskList = departments
-                .Select(e => GetDepartmentVotes(e.Name))
+            // Consultar a cada departamento asincronicamente
+            var getVoteResultsTaskList = _departmentClients
+                .Select(FetchDepartmentVotes)
                 .ToList();
-            
-            return await Task.WhenAll(getVoteResultsTaskList);
+
+            // Esperar todos los resultados
+            return Task.WhenAll(getVoteResultsTaskList).Result;
         }
 
-        private async Task<DepartmentVoteResults> GetDepartmentVotes(string departmentName)
+        private async Task<DepartmentVoteResults> FetchDepartmentVotes(IDepartmentClient client)
         {
-            var department = await Task.Run(() => new DepartmentVoteResults()); // TODO
-            await UpdateDepartmentVotes(department);
-            return department;
+            // Consultarle a un servidor departamental por sus resultados y persistirlos
+            var voteResults = client.GetVoteResults().Result;
+            await this._departmentalVotesServices.UpdateDepartmentVotes(voteResults);
+            return voteResults;
         }
 
-        private async Task UpdateDepartmentVotes(DepartmentVoteResults department)
+        private static DepartmentsVoteResults MapDepartmentsResults(IEnumerable<DepartmentVoteResults> votes)
         {
-            var taskList = department.VoteResults.Select(result => 
-                    _departmentalVoteRepository.AddAsync(new DepartmentalVoteEntity()
-                    {
-                        OptionName = result.Key,
-                        DepartmentName = department.DepartmentName,
-                        VotesCount = result.Value
-                    }))
-                .ToList();
-            
-            await Task.WhenAll(taskList);
-        }
-
-        private static DepartmentsVoteResults MapDepartmentsResults(DepartmentVoteResults[] votes)
-        {
+            // Unificar los votos de cada departamento en un unico objeto
             var results = new DepartmentsVoteResults();
             foreach (var vote in votes)
             {

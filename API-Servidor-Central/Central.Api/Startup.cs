@@ -12,12 +12,16 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Central.Core.Interfaces.Repositories;
 using Central.Core.Interfaces.Services;
+using Central.Core.Interfaces.Services.Clients;
 using Central.Core.Services;
+using Central.Core.Services.Clients;
 using Central.DAL.EFCore.Repositories;
 using Central.DAL.EFCore.Util;
+using MySql.Data.MySqlClient.Memcached;
 
 namespace Central.Api
 {
@@ -42,16 +46,25 @@ namespace Central.Api
             #region Services Register
             services.AddScoped<IElectionService, ElectionService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IOptionsService, OptionsService>();
+            services.AddScoped<IDepartmentalVoteService, DepartamentalVoteService>();
             #endregion
 
             #region Http Client Register
-
-            foreach (var config in Configuration.GetValue<DepartmentsConfiguration>("DepartmentsConfiguration").Values)
+            
+            var departmentsConfiguration = new DepartmentsConfiguration();
+            Configuration.GetSection("DepartmentsConfiguration").Bind(departmentsConfiguration);
+            foreach (var config in departmentsConfiguration)
             {
-                if (config.Active)
+                if (config.Value.Active)
                 {
-                    services.AddHttpClient<IDepartmentClient, DepartmentClient>(client =>
-                        client.BaseAddress = new Uri(config.Domain));    
+                    services.AddHttpClient<IDepartmentClient, DepartmentClient>(config.Key, client =>
+                    {
+                        client.BaseAddress = new Uri(config.Value.Domain);
+                        return new DepartmentClient(client, config.Key);
+                    }).ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler {
+                        ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+                    });
                 }
             }
 
@@ -61,6 +74,7 @@ namespace Central.Api
             services.AddScoped<IElectionRepository, ElectionRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<IDepartmentalVoteRepository, DepartmentalVoteRepository>();
+            services.AddScoped<IOptionsRepository, OptionsRepository>();
             #endregion
 
             #region DbContext Register

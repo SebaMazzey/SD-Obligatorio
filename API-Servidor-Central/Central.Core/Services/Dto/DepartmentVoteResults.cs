@@ -6,5 +6,11 @@ namespace Central.Core.Services.Dto
     {
         public string DepartmentName { get; set; }
         public VoteResults VoteResults { get; set; }
+
+        public DepartmentVoteResults(string departmentName, VoteResults voteResults)
+        {
+            DepartmentName = departmentName;
+            VoteResults = voteResults;
+        }
     }
 }

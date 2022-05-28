@@ -5,6 +5,9 @@ namespace Central.Core.Interfaces.Services
 {
     public interface IDepartmentService
     {
-        public Task<DepartmentsVoteResults> UpdateAllDepartmentVotes();
+        /**
+         * Se obtienen los resultados de votacion de cada departamento
+         */
+        public DepartmentsVoteResults GetAllDepartmentVotes(int electionId, bool forceUpdate);
     }
 }

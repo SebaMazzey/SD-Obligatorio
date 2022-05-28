@@ -24,12 +24,13 @@ CREATE TABLE `Options` (
   CONSTRAINT `FK_Options_Election_Election_Id` FOREIGN KEY (`Election_Id`) REFERENCES `Election` (`Id`) ON DELETE RESTRICT
 );
 
-CREATE TABLE `DepartamentalVotes` (
+CREATE TABLE `DepartmentalVotes` (
   `Option_Name` varchar(100) NOT NULL,
   `Department_Name` varchar(100) NOT NULL,
-  `VotesCount` int NOT NULL,
+  `VotesCount` int(11) NOT NULL,
   PRIMARY KEY (`Department_Name`,`Option_Name`),
   KEY `IX_DepartamentalVotes_Option_Name` (`Option_Name`),
-  CONSTRAINT `FK_DepartamentalVotes_Departments_Department_Name` FOREIGN KEY (`Department_Name`) REFERENCES `Departments` (`Name`) ON DELETE RESTRICT,
-  CONSTRAINT `FK_DepartamentalVotes_Options_Option_Name` FOREIGN KEY (`Option_Name`) REFERENCES `Options` (`Name`) ON DELETE RESTRICT
+  CONSTRAINT `FK_DepartamentalVotes_Departments_Department_Name` FOREIGN KEY (`Department_Name`) REFERENCES `Departments` (`Name`),
+  CONSTRAINT `FK_DepartamentalVotes_Options_Option_Name` FOREIGN KEY (`Option_Name`) REFERENCES `Options` (`Name`)
 );
+
