@@ -47,7 +47,7 @@ namespace Central.Api
             services.AddScoped<IElectionService, ElectionService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IOptionsService, OptionsService>();
-            services.AddScoped<IDepartmentalVoteService, DepartamentalVoteService>();
+            services.AddScoped<IDepartmentalVoteService, DepartmentalVoteService>();
             #endregion
 
             #region Http Client Register

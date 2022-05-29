@@ -23,7 +23,7 @@ namespace Central.Core.Services
             this._departmentClients = departmentClients;
         }
 
-        public DepartmentsVoteResults GetAllDepartmentVotes(int electionId, bool forceUpdate)
+        public CountryVoteResults GetAllDepartmentVotes(int electionId, bool forceUpdate)
         {
             if (!forceUpdate)
             {
@@ -31,7 +31,7 @@ namespace Central.Core.Services
                 var departmentsResults = this._departmentalVotesServices.GetDepartmentVoteResults(electionId);
                 if (departmentsResults.Count != 0) { return departmentsResults; }
             }
-            else { this._departmentalVotesServices.DeleteDepartamentalVotes(electionId); }
+            else { this._departmentalVotesServices.DeleteDepartmentalVotes(electionId); }
 
             // Sino se obtienen los nuevos resultados y se persisten
             var newDepartmentResults = this.FetchAllDepartmentsVotes();
@@ -58,10 +58,10 @@ namespace Central.Core.Services
             return voteResults;
         }
 
-        private static DepartmentsVoteResults MapDepartmentsResults(IEnumerable<DepartmentVoteResults> votes)
+        private static CountryVoteResults MapDepartmentsResults(IEnumerable<DepartmentVoteResults> votes)
         {
             // Unificar los votos de cada departamento en un unico objeto
-            var results = new DepartmentsVoteResults();
+            var results = new CountryVoteResults();
             foreach (var vote in votes)
             {
                 results.Add(vote.DepartmentName, vote.VoteResults);

@@ -9,16 +9,7 @@ namespace Central.DAL.EFCore.Repositories
 {
     public class DepartmentalVoteRepository : EfRepository<DepartmentalVoteEntity>, IDepartmentalVoteRepository
     {
-        public DepartmentalVoteRepository(CentralContext dbContext) : base(dbContext)
-        {
-        }
-
-        public bool WasAlreadyFetched(int electionId)
-        {
-            return this._dbContext.DepartamentalVotes
-                .Join(this._dbContext.Options, dp => dp.OptionName, o => o.Name, (dp, o) => o)
-                .Any(o => o.ElectionId == electionId);
-        }
+        public DepartmentalVoteRepository(CentralContext dbContext) : base(dbContext) { }
 
         public List<DepartmentalVoteEntity> GetResults(int electionId)
         {

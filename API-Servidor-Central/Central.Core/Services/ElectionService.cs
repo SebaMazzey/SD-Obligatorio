@@ -31,7 +31,7 @@ namespace Central.Core.Services
             return results;
         }
 
-        private static VoteResults SummaryVotes(DepartmentsVoteResults departmentsVotes)
+        private static VoteResults SummaryVotes(CountryVoteResults departmentsVotes)
         {
             // Unifica los votos de cada departamento en un unico objeto
             var summary = new VoteResults();

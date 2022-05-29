@@ -13,11 +13,11 @@ namespace Central.Core.Interfaces.Services
         /**
          * Obtener los resultados ya persistidos en la base anteriormente
          */
-        public DepartmentsVoteResults GetDepartmentVoteResults(int electionId);
+        public CountryVoteResults GetDepartmentVoteResults(int electionId);
 
         /**
          * Eliminar votos departamentales de una eleccion, utilizado para forzar u¿el actualizado de votos
          */
-        void DeleteDepartamentalVotes(int electionId);
+        void DeleteDepartmentalVotes(int electionId);
     }
 }

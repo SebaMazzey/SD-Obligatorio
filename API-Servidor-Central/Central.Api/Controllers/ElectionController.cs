@@ -20,12 +20,15 @@ namespace Central.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ElectionResults> Results(int id)
+        public ActionResult<ElectionResults> Results(int electionId)
         {
             try
             {
                 var hasForceUpdate = Request.Headers.TryGetValue("Force-Update-Votes", out var forceUpdate);
-                return Ok(hasForceUpdate ? _electionService.GetElectionResults(id, bool.Parse(forceUpdate)) : _electionService.GetElectionResults(id));
+                var electionResults = hasForceUpdate ? 
+                    _electionService.GetElectionResults(electionId, bool.Parse(forceUpdate)) : 
+                    _electionService.GetElectionResults(electionId);
+                return Ok(electionResults);
             }
             catch (Exception e)
             {

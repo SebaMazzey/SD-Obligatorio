@@ -2,6 +2,9 @@ using System.Collections.ObjectModel;
 
 namespace Central.Core.Services.Dto
 {
+    /**
+     * Resultados de votacion asociados a un departamento
+     */
     public class DepartmentVoteResults
     {
         public string DepartmentName { get; set; }

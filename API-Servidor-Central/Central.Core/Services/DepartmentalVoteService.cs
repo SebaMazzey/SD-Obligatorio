@@ -8,11 +8,11 @@ using Central.Core.Services.Dto;
 
 namespace Central.Core.Services
 {
-    public class DepartamentalVoteService : IDepartmentalVoteService
+    public class DepartmentalVoteService : IDepartmentalVoteService
     {
         private readonly IDepartmentalVoteRepository _departmentalVoteRepository;
 
-        public DepartamentalVoteService(IDepartmentalVoteRepository departmentalVoteRepository)
+        public DepartmentalVoteService(IDepartmentalVoteRepository departmentalVoteRepository)
         {
             this._departmentalVoteRepository = departmentalVoteRepository;
         }
@@ -32,22 +32,17 @@ namespace Central.Core.Services
             await Task.WhenAll(taskList);
         }
 
-        public DepartmentsVoteResults GetDepartmentVoteResults(int electionId)
+        public CountryVoteResults GetDepartmentVoteResults(int electionId)
         {
             // Obtener los resultados ya persistidos en la base
             var departmentalVoteEntities = this._departmentalVoteRepository.GetResults(electionId);
             return MapDepartmentsResults(departmentalVoteEntities);
         }
 
-        public void DeleteDepartamentalVotes(int electionId)
-        {
-            this._departmentalVoteRepository.DeleteElectionVotes(electionId);
-        }
-
-        private static DepartmentsVoteResults MapDepartmentsResults(List<DepartmentalVoteEntity> votes)
+        private static CountryVoteResults MapDepartmentsResults(List<DepartmentalVoteEntity> votes)
         {
             // Unificar las entidades de cada resultado departamental en un unico objeto
-            var results = new DepartmentsVoteResults();
+            var results = new CountryVoteResults();
             foreach (var vote in votes)
             {
                 if (!results.ContainsKey(vote.DepartmentName))
@@ -57,6 +52,11 @@ namespace Central.Core.Services
                 results[vote.DepartmentName].Add(vote.OptionName, vote.VotesCount);
             }
             return results;
+        }
+        
+        public void DeleteDepartmentalVotes(int electionId)
+        {
+            this._departmentalVoteRepository.DeleteElectionVotes(electionId);
         }
     }
 }
