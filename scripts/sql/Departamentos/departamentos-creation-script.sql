@@ -22,7 +22,7 @@ CREATE TABLE `Options` (
 
 CREATE TABLE `Users` (
   `CI` varchar(64) NOT NULL,
-  `Already_Voted` BOOLEAN NOT NULL,
+  `Already_Voted` BOOLEAN NOT NULL DEFAULT '0',
   PRIMARY KEY (`CI`)
 );
 

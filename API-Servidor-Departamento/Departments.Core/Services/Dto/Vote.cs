@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -13,6 +14,7 @@ namespace Departments_Core.Services.Dto
         public string Option { get; set; }
         [Required]
         [JsonPropertyName("circuit_number")]
+        [JsonProperty(PropertyName = "circuit_number")]
         public int CircuitNumber { get; set; }
     }
 }

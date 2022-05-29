@@ -6,6 +6,6 @@ namespace Central.Core.Interfaces.Repositories
 {
     public interface IElectionRepository : IRepository<ElectionEntity>
     {
-   
+        bool ElectionIsValid(int electionId);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Central.Core.Interfaces.Repositories;
 using Central.Core.Interfaces.Services;
@@ -20,6 +21,11 @@ namespace Central.Core.Services
         
         public ElectionResults GetElectionResults(int electionId, bool forceUpdate = false)
         {
+            if(!_electionRepository.ElectionIsValid(electionId))
+            {
+                throw new Exception("El Id no es valido o la elección aún no a terminado");
+            }
+
             // Obtener los resultados de votacion de cada departamento
             var results = new ElectionResults();
             var departmentVotes = this._departmentService.GetAllDepartmentVotes(electionId, forceUpdate);
