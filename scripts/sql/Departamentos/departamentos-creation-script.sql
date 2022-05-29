@@ -7,14 +7,6 @@ CREATE TABLE `Circuits` (
   PRIMARY KEY (`Number`)
 );
 
-CREATE TABLE `EnabledDevices` (
-  `Code` varchar(767) NOT NULL,
-  `Circuit_Number` int NOT NULL,
-  PRIMARY KEY (`Code`),
-  KEY `IX_EnabledDevices_Circuit_Number` (`Circuit_Number`),
-  CONSTRAINT `FK_EnabledDevices_Circuits_Circuit_Number` FOREIGN KEY (`Circuit_Number`) REFERENCES `Circuits` (`Number`) ON DELETE RESTRICT
-);
-
 CREATE TABLE `Options` (
   `Name` varchar(767) NOT NULL,
   PRIMARY KEY (`Name`)

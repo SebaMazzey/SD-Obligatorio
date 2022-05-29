@@ -20,7 +20,6 @@ namespace Departments.DAL.EFCore.Core
         }
 
         public DbSet<CircuitEntity> Circuits { get; set; }
-        public DbSet<EnabledDeviceEntity> EnabledDevices { get; set; }
         public DbSet<OptionEntity> Options { get; set; }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<VoteEntity> Votes { get; set; }
@@ -40,14 +39,6 @@ namespace Departments.DAL.EFCore.Core
             {
                 entity.Property(e => e.Number)
                     .ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<EnabledDeviceEntity>(entity =>
-            {
-                entity.HasOne(d => d.Circuit)
-                    .WithMany(c => c.EnabledDevices)
-                    .HasForeignKey(d => d.CircuitNumber)
-                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<OptionEntity>(entity =>

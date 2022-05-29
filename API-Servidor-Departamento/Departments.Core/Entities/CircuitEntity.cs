@@ -14,12 +14,10 @@ namespace Departments_Core.Entities
         public CircuitEntity()
         {
             Votes = new HashSet<VoteEntity>();
-            EnabledDevices = new HashSet<EnabledDeviceEntity>();
         }
 
         [Key]
         public int Number { get; set; }
         public virtual ICollection<VoteEntity> Votes { get; set; }
-        public virtual ICollection<EnabledDeviceEntity> EnabledDevices { get; set; }
     }
 }
