@@ -12,7 +12,16 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Central.Core.Interfaces.Repositories;
+using Central.Core.Interfaces.Services;
+using Central.Core.Interfaces.Services.Clients;
+using Central.Core.Services;
+using Central.Core.Services.Clients;
+using Central.DAL.EFCore.Repositories;
+using Central.DAL.EFCore.Util;
+using MySql.Data.MySqlClient.Memcached;
 
 namespace Central.Api
 {
@@ -35,11 +44,37 @@ namespace Central.Api
             #endregion
 
             #region Services Register
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IElectionService, ElectionService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IOptionsService, OptionsService>();
+            services.AddScoped<IDepartmentalVoteService, DepartmentalVoteService>();
+            #endregion
+
+            #region Http Client Register
+            
+            var departmentsConfiguration = new DepartmentsConfiguration();
+            Configuration.GetSection("DepartmentsConfiguration").Bind(departmentsConfiguration);
+            foreach (var config in departmentsConfiguration)
+            {
+                if (config.Value.Active)
+                {
+                    services.AddHttpClient<IDepartmentClient, DepartmentClient>(config.Key, client =>
+                    {
+                        client.BaseAddress = new Uri(config.Value.Domain);
+                        return new DepartmentClient(client, config.Key);
+                    }).ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler {
+                        ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+                    });
+                }
+            }
+
             #endregion
 
             #region Repositories Register
-            //services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IElectionRepository, ElectionRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IDepartmentalVoteRepository, DepartmentalVoteRepository>();
+            services.AddScoped<IOptionsRepository, OptionsRepository>();
             #endregion
 
             #region DbContext Register
@@ -62,9 +97,10 @@ namespace Central.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Central.Api v1"));
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Central.Api v1"));
 
             app.UseHttpsRedirection();
 

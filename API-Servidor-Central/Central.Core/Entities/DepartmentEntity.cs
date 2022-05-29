@@ -13,11 +13,11 @@ namespace Central.Core.Entities
     {
         public DepartmentEntity()
         {
-            DepartamentalVotes = new HashSet<DepartamentalVoteEntity>();
+            DepartamentalVotes = new HashSet<DepartmentalVoteEntity>();
         }
 
         [Key, MaxLength(100)]
         public string Name { get; set; }
-        public ICollection<DepartamentalVoteEntity> DepartamentalVotes { get; set; }
+        public ICollection<DepartmentalVoteEntity> DepartamentalVotes { get; set; }
     }
 }
