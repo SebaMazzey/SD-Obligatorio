@@ -6,7 +6,6 @@ services:
   build: ./API-Servidor-Central/
   ports:
     - "8000:80"
-    - "9000:443"
   depends_on:
     - "mysql-central"
   links:
@@ -25,7 +24,6 @@ services:
   build: ./API-Servidor-Departamento/
   ports:
     - "8001:80"
-    - "9001:443"
   depends_on:
     - "mysql-dpto-tacuarembo"
   links:
@@ -38,13 +36,12 @@ services:
   ports:
     - 4001:3306
   volumes:
-    - ./scripts/sql/Departamentos/:/docker-entrypoint-initdb.d/
+    - ./scripts/sql/Departamentos/Tacuarembo/:/docker-entrypoint-initdb.d/
 
  dpto-montevideo:
   build: ./API-Servidor-Departamento/
   ports:
     - "8002:80"
-    - "9002:443"
   depends_on:
     - "mysql-dpto-montevideo"
   links:
@@ -57,4 +54,4 @@ services:
   ports:
     - 4002:3306
   volumes:
-    - ./scripts/sql/Departamentos/:/docker-entrypoint-initdb.d/
+    - ./scripts/sql/Departamentos/Montevideo/:/docker-entrypoint-initdb.d/
