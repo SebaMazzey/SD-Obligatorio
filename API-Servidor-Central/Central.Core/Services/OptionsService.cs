@@ -27,6 +27,7 @@ namespace Central.Core.Services
                     TotalVotes = results.Value
                 });
             }
+            this._optionsRepository.SaveChanges();
         }
     }
 }
