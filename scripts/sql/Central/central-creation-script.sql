@@ -17,7 +17,7 @@ CREATE TABLE `Departments` (
 
 CREATE TABLE `Options` (
   `Name` varchar(100) NOT NULL,
-  `TotalVotes` int NOT NULL,
+  `TotalVotes` int NOT NULL DEFAULT 0,
   `Election_Id` int NOT NULL,
   PRIMARY KEY (`Name`),
   KEY `IX_Options_Election_Id` (`Election_Id`),
@@ -34,3 +34,30 @@ CREATE TABLE `DepartmentalVotes` (
   CONSTRAINT `FK_DepartamentalVotes_Options_Option_Name` FOREIGN KEY (`Option_Name`) REFERENCES `Options` (`Name`)
 );
 
+
+INSERT INTO Central.Election
+(Id, Name, Start_Date, End_Date)
+VALUES(1, 'Referendum LUC', '2022-05-31 00:07:00', '2022-05-31 00:19:00');
+
+-- Opciones de Voto
+INSERT INTO Central.`Options` (Name, Election_Id) VALUES ('Voto Si', 1), ('Voto No', 1), ('Voto Anulado', 1), ('Voto en Blanco', 1); 
+
+INSERT INTO Central.Departments VALUES ('Artigas')
+, ('Canelones')
+, ('Cerro Largo')
+, ('Colonia')
+, ('Durazno')
+, ('Flores')
+, ('Lavalleja')
+, ('Florida')
+, ('Maldonado')
+, ('Montevideo')
+, ('Paysandu')
+, ('Rio Negro')
+, ('Rivera')
+, ('Rocha')
+, ('Salto')
+, ('San Jose')
+, ('Soriano')
+, ('Tacuarembo')
+, ('Treinta y Tres')
