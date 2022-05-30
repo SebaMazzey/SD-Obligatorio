@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Central.Core.Interfaces.Services;
 using Central.Core.Services.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,33 @@ namespace Central.Api.Controllers
         {
             _electionService = electionService;
             _logger = logger;
+        }
+
+        [HttpPost]
+        public ActionResult Create(Election election)
+        {
+            try
+            {
+                this._electionService.CreateElection(election);
+                return Ok("New Election created");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<ElectionInfo>> GetAll()
+        {
+            try
+            {
+                return Ok(this._electionService.GetAllElections());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         [HttpGet]
