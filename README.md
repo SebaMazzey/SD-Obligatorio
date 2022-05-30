@@ -29,6 +29,7 @@ Se deben levantar los contenedores, para hacerlo se debe ejecutar el archivo ini
 
 ##### Swagger
 Para esta DEMO se podrá interactuar con el sistema a través de swagger, pegandole a los diferentes endpoints de las APIs. 
+
 ``USER``
 * Verify: Introduciendo una CI, el sistema verificará al usuario y su elegibilidad para votar.
 * RemainingVotes: Devuelve la cantidad de personas que aún no votaron.
