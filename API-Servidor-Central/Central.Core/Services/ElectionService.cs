@@ -47,7 +47,7 @@ namespace Central.Core.Services
             {
                 throw new InvalidDataException("Invalid dates -> Must be consecutives");
             }
-            if (!this._electionRepository.IsDateAvailable(election.StartDate, election.EndDate))
+            if (this._electionRepository.IsDateTaken(election.StartDate, election.EndDate))
             {
                 throw new InvalidDataException("Invalid dates -> Date not available");
             }

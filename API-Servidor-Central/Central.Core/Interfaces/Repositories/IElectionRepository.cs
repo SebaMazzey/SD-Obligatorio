@@ -10,9 +10,10 @@ namespace Central.Core.Interfaces.Repositories
     {
         bool ElectionIsValid(int electionId);
 
-        bool IsDateAvailable(DateTime startDate, DateTime endDate);
+        bool IsDateTaken(DateTime startDate, DateTime endDate);
 
         ElectionEntity CreateElection(ElectionEntity entity);
+        
         IEnumerable<ElectionInfo> GetAllElectionsInfo();
     }
 }
