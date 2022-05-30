@@ -36,6 +36,9 @@ Para esta DEMO se podrá interactuar con el sistema a través de swagger, pegand
 
 ``VOTE``
 * Add: Dado un CI, una opción de voto y un número de circuito, se emite el voto y se preserva en la BD.
-* Results: Devuelve los resultados de la votación
+* Results: Devuelve los resultados de la votación del departamento.
 
-
+``ELECTION``
+* Create: Crea una nueva elección, se debe proporcionar el nombre, la fecha de inicio y fin y las opciones.
+* GetAll: Devuelve todas las elecciones. 
+* Results: Devuelve los votos totales de la elección. 
