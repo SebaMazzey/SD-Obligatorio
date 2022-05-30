@@ -17,11 +17,11 @@ CREATE TABLE `Departments` (
 
 CREATE TABLE `Options` (
   `Name` varchar(100) NOT NULL,
-  `TotalVotes` int NOT NULL DEFAULT 0,
-  `Election_Id` int NOT NULL,
-  PRIMARY KEY (`Name`),
+  `TotalVotes` int(11) NOT NULL DEFAULT '0',
+  `Election_Id` int(11) NOT NULL,
+  PRIMARY KEY (`Name`, `Election_Id`),
   KEY `IX_Options_Election_Id` (`Election_Id`),
-  CONSTRAINT `FK_Options_Election_Election_Id` FOREIGN KEY (`Election_Id`) REFERENCES `Election` (`Id`) ON DELETE RESTRICT
+  CONSTRAINT `FK_Options_Election_Election_Id` FOREIGN KEY (`Election_Id`) REFERENCES `Election` (`Id`)
 );
 
 CREATE TABLE `DepartmentalVotes` (

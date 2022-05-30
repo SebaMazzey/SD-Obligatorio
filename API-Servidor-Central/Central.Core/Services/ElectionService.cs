@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Central.Core.Entities;
 using Central.Core.Interfaces.Repositories;
 using Central.Core.Interfaces.Services;
 using Central.Core.Services.Dto;
@@ -18,7 +21,38 @@ namespace Central.Core.Services
             this._departmentService = departmentService;
             this._optionsService = optionsService;
         }
-        
+
+        public void CreateElection(Election election)
+        {
+            ValidateElection(election);
+            var entity = _electionRepository.CreateElection(new ElectionEntity()
+            {
+                Name = election.Name,
+                StartDate = election.StartDate,
+                EndDate = election.EndDate
+            });
+
+            this._electionRepository.SaveChanges();
+            _optionsService.AddElectionOptions(entity.Id, election.Options);
+        }
+
+        public IEnumerable<ElectionInfo> GetAllElections()
+        {
+           return this._electionRepository.GetAllElectionsInfo();
+        }
+
+        private void ValidateElection(Election election)
+        {
+            if (election.StartDate > election.EndDate)
+            {
+                throw new InvalidDataException("Invalid dates -> Must be consecutives");
+            }
+            if (this._electionRepository.IsDateTaken(election.StartDate, election.EndDate))
+            {
+                throw new InvalidDataException("Invalid dates -> Date not available");
+            }
+        }
+
         public ElectionResults GetElectionResults(int electionId, bool forceUpdate = false)
         {
             if(!_electionRepository.ElectionIsValid(electionId))

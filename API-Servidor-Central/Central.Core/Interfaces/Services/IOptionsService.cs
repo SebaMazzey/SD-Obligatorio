@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Central.Core.Services.Dto;
 
 namespace Central.Core.Interfaces.Services
@@ -9,5 +10,8 @@ namespace Central.Core.Interfaces.Services
          * <param name="voteResults">Votos totales del pais de cada Option </param>
          */
         void UpdateCount(int electionId, VoteResults voteResults);
+
+
+        void AddElectionOptions(int electionId, IEnumerable<string> options);
     }
 }
