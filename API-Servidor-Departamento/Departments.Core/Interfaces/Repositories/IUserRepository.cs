@@ -9,7 +9,7 @@ namespace Departments_Core.Interfaces.Repositories
 {
     public interface IUserRepository: IRepository<UserEntity>
     {
-        public int CountNotVotedUsersWithCI(string ci);
-        public int CountRemainingVotes();
+        int CountNotVotedUsersWithCI(string ci);
+        int CountRemainingVotes();
     }
 }
