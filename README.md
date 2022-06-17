@@ -30,6 +30,14 @@ Se deben levantar los contenedores, para hacerlo se debe ejecutar el archivo ini
 ##### Swagger
 Para esta DEMO se podrá interactuar con el sistema a través de swagger, pegandole a los diferentes endpoints de las APIs. 
 
+``ELECTION``
+* Create: Crea una nueva elección, se debe proporcionar el nombre, la fecha de inicio y fin y las opciones.
+* GetAll: Devuelve todas las elecciones. 
+* Results: Devuelve los votos totales de la elección. 
+
+``OPTION``
+* VotingOptions: Devuelve la lista de opciones para votar
+
 ``USER``
 * Verify: Introduciendo una CI, el sistema verificará al usuario y su elegibilidad para votar.
 * RemainingVotes: Devuelve la cantidad de personas que aún no votaron.
@@ -37,8 +45,3 @@ Para esta DEMO se podrá interactuar con el sistema a través de swagger, pegand
 ``VOTE``
 * Add: Dado un CI, una opción de voto y un número de circuito, se emite el voto y se preserva en la BD.
 * Results: Devuelve los resultados de la votación del departamento.
-
-``ELECTION``
-* Create: Crea una nueva elección, se debe proporcionar el nombre, la fecha de inicio y fin y las opciones.
-* GetAll: Devuelve todas las elecciones. 
-* Results: Devuelve los votos totales de la elección. 
