@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CircuitosApp.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,70 +15,109 @@ namespace DepartamentoApp
 {
     public partial class AppVotos : Form
     {
-        private string sessionToken = "";
-        private static readonly HttpClient client = new HttpClient();
+        private readonly UserService _userService;
+        private string userCi = "";
+        private List<string> options = new();
+        private readonly int circuitNumber;
 
-        private enum RequestType
+        public AppVotos(int circuitNumber)
         {
-            Get,
-            Post
-        }
-
-        public AppVotos()
-        {
-            client.BaseAddress = new Uri("http://localhost:8001");
+            _userService = new UserService();
+            this.circuitNumber = circuitNumber;
             InitializeComponent();
+            LoadVotingOptions();
         }
 
-        private void buttonLogin_Click(object sender, EventArgs e)
+        private void LoadVotingOptions()
         {
-            string userCi = user_ci.Text;
-            // Crear request http y guardarToken
             try
             {
-                this.sessionToken = CallDepartmentApiAsync("User/Verify?ci=" + userCi, RequestType.Get).Result;
+                // Get options and total rows to create
+                List<string> options = VoteService.GetVotingOptions();
+                this.options = options;
+                this.votingOptions.DataSource = options;
+                this.votingOptions.ClearSelected();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener opciones de votación" + ex.Message +
+                    ". Por favor informar al encargado del circuito");
+            }
+        }
+
+        private void ClearAndShuffleOptions()
+        {
+            // Randomize list order
+            var rnd = new Random();
+            this.options = this.options.OrderBy(x => rnd.Next()).ToList();
+            // Reasign list and clear selection
+            this.votingOptions.DataSource = this.options;
+            this.votingOptions.ClearSelected();
+        }
+
+        private void ButtonLogin_Click(object sender, EventArgs e)
+        {
+            this.userCi = user_ci.Text;
+            try
+            {
+                // If login sucess then change to votingMenu and display votin options
+                if (_userService.LogInUser(userCi))
+                {
+                    this.panelInit.Hide();
+                    this.panelVote.Show();
+                    MessageBox.Show("Exito al ingresar. Proceda a votar");
+                } else
+                {
+                    MessageBox.Show("Error al ingresar: CI no valida o ya voto");
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Se produjo un Error: " + ex.Message);
             }
-            // If login sucess then change to votingMenu and display votin options
-            if (sessionToken != "")
-            {
-                this.panelInit.Hide();
-                this.panelVote.Show();
-                MessageBox.Show("Login sucess. Token = " + sessionToken);
-            } else
-            {
-                MessageBox.Show("Error al ingresar: CI no valida");
-            }
         }
 
-        private async Task<string> CallDepartmentApiAsync(string url, RequestType requestType, string authToken = "", string body = "")
+        private void ConfirmVoteElection_Click(object sender, EventArgs e)
         {
-            
-            if (authToken.Length != 0)
-                client.DefaultRequestHeaders.Add("PEPITO", authToken);
-
-            var response = "";
-            try
+            string selectedOption = (string)votingOptions.SelectedValue;
+            if(!String.IsNullOrEmpty(selectedOption))
             {
-                switch (requestType)
+                string message = "Usted a seleccionado la opcion \"" + selectedOption + "\". Desea confirmar su elección?";
+                string title = "Confirmar elección";
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult result = MessageBox.Show(message,title,buttons);
+                if (result == DialogResult.Yes)
                 {
-                    case RequestType.Get:
-                        var httpResponse = client.GetAsync(url).GetAwaiter().GetResult();
-                        if (httpResponse.StatusCode == HttpStatusCode.OK)
-                            response = await httpResponse.Content.ReadAsStringAsync();
-                        break;
-                    case RequestType.Post:
-                        break;
+                    try
+                    {
+                        // Enviar el voto
+                        if (VoteService.SubmitVote(_userService.SessionToken, selectedOption, userCi, circuitNumber))
+                        {
+                            MessageBox.Show("Su voto fue enviado con exito");
+                        }
+                        else
+                        {
+                            string messageError = "Se produjo un error al enviar el voto." +
+                                "Es posible que el tiempo expiro y tenga que volver a repetir el proceso." +
+                                "Sera enviado nuevamente al menu de inicio";
+                            MessageBox.Show(messageError, "Error al enviar voto");
+                        }
+                        _userService.ClearToken(); // Limpiar token
+                        ClearAndShuffleOptions(); // Reordenar lista de opciones
+                        this.user_ci.Text = ""; // Volver al home y limpiar campo CI
+                        this.panelVote.Hide();
+                        this.panelInit.Show();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Se produjo un error al enviar el voto." +
+                            "Intente nuevamente o contacte al encargado");
+                    }
                 }
-            }
-            catch (Exception)
+            } else
             {
-                throw;
+                MessageBox.Show("Debe seleccionar una opción antes de confirmar");
             }
-            return response;
         }
     }
 }

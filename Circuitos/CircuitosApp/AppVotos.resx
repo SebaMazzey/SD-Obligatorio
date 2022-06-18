@@ -57,4 +57,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="votingExplanationLabel.Text" xml:space="preserve">
+    <value>A continuación se le presentan las opciones por las cuales usted podra votar. Debe seleccionar una única opcion y luego presionar el boton de "Confirmar mi elección" para fijar su opción. Las opciones se presentan ordenadas al azar para no favorizar a 
+ninguna de estas.
+
+
+</value>
+  </data>
 </root>
