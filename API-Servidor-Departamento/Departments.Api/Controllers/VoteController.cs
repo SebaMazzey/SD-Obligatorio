@@ -16,13 +16,11 @@ namespace Departments_API.Controllers
     public class VoteController : ControllerBase
     {
         private readonly IVoteService _voteService;
-        private readonly ITokenService _tokenService;
         private readonly ILogger<VoteController> _logger;
 
-        public VoteController(IVoteService voteService, ITokenService tokenService, ILogger<VoteController> logger)
+        public VoteController(IVoteService voteService, ILogger<VoteController> logger)
         {
             this._voteService = voteService;
-            this._tokenService = tokenService;
             this._logger = logger;
         }
 
