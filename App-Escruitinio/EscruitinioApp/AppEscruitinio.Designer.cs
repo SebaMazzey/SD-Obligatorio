@@ -144,7 +144,8 @@ namespace EscruitinioApp
             this.departmentalResult.FormattingEnabled = true;
             this.departmentalResult.ItemHeight = 21;
             this.departmentalResult.Items.AddRange(new object[] {
-            "Voto si: x votos"});
+            "Deparment",
+            "\tVoto si: x votos"});
             this.departmentalResult.Location = new System.Drawing.Point(347, 200);
             this.departmentalResult.Name = "departmentalResult";
             this.departmentalResult.Size = new System.Drawing.Size(383, 214);
@@ -189,7 +190,7 @@ namespace EscruitinioApp
             this.resultContent.Name = "resultContent";
             this.resultContent.Size = new System.Drawing.Size(726, 46);
             this.resultContent.TabIndex = 3;
-            this.resultContent.Text = "La opción mas votada de la elección fue \"Voto Sí\" \r\ncon un total de 5 votos.\r\n";
+            this.resultContent.Text = "text goes here";
             // 
             // resultTitle
             // 
@@ -228,8 +229,8 @@ namespace EscruitinioApp
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.initPanel);
             this.Controls.Add(this.resultPanel);
+            this.Controls.Add(this.initPanel);
             this.Name = "AppEscruitinio";
             this.Text = "App Escruitinio";
             this.initPanel.ResumeLayout(false);
