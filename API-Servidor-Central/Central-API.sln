@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Central.Core", "Central.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Central.DAL.EFCore", "Central.DAL.EFCore\Central.DAL.EFCore.csproj", "{B29FCF7B-B0BF-4E2C-9EBE-3A08A0B7061B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralApp", "CentralApp\CentralApp.csproj", "{C4258E11-B1D9-4069-B0B8-0440F1CE10F5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{B29FCF7B-B0BF-4E2C-9EBE-3A08A0B7061B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B29FCF7B-B0BF-4E2C-9EBE-3A08A0B7061B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B29FCF7B-B0BF-4E2C-9EBE-3A08A0B7061B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4258E11-B1D9-4069-B0B8-0440F1CE10F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4258E11-B1D9-4069-B0B8-0440F1CE10F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4258E11-B1D9-4069-B0B8-0440F1CE10F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4258E11-B1D9-4069-B0B8-0440F1CE10F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
