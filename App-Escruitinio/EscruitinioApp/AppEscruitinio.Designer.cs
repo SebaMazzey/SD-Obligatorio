@@ -229,8 +229,8 @@ namespace EscruitinioApp
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.resultPanel);
             this.Controls.Add(this.initPanel);
+            this.Controls.Add(this.resultPanel);
             this.Name = "AppEscruitinio";
             this.Text = "App Escruitinio";
             this.initPanel.ResumeLayout(false);
