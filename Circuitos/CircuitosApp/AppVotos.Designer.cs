@@ -1,6 +1,5 @@
 ﻿
 using CircuitosApp.ExtraFormElements;
-using System.Globalization;
 
 namespace DepartamentoApp
 {
@@ -184,8 +183,8 @@ namespace DepartamentoApp
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(784, 461);
-            this.Controls.Add(this.panelInit);
             this.Controls.Add(this.panelVote);
+            this.Controls.Add(this.panelInit);
             this.Name = "AppVotos";
             this.Text = "App Votación";
             this.panelInit.ResumeLayout(false);

@@ -20,7 +20,7 @@ namespace DepartamentoApp
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Setup baseUrl and circuitNumber
-            HttpService.AddBaseUrl("http://localhost:8001");
+            HttpService.AddBaseUrl("http://localhost:8002");
             var circuitNumber = 0;
 
             Application.Run(new AppVotos(circuitNumber));

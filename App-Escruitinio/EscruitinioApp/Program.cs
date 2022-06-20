@@ -1,10 +1,11 @@
+using EscruitinioApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CentralApp
+namespace EscruitinioApp
 {
     static class Program
     {
@@ -17,7 +18,11 @@ namespace CentralApp
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            // Setup baseUrl and circuitNumber
+            HttpService.AddBaseUrl("http://localhost:8000");
+
+            Application.Run(new AppEscruitinio());
         }
     }
 }
