@@ -45,3 +45,14 @@ Para esta DEMO se podrá interactuar con el sistema a través de swagger, pegand
 ``VOTE``
 * Add: Dado un CI, una opción de voto y un número de circuito, se emite el voto y se preserva en la BD.
 * Results: Devuelve los resultados de la votación del departamento.
+
+
+##### Aplicaciones
+Dentro de la carpeta AppReleases encontraremos los ejecutables para la aplicación:
+
+``Servidor Central``
+* El ejecutable EscrutinioApp.exe nos permite acceder a la aplicacion conectada con la base de datos del servidor central.
+
+``Servidores Departamentales``
+* Los ejecutables (CircuitosApp-Mvd.exe y CircuitosApp-Tacua.exe) nos permiten acceder a las distintas aplicaciones departamentales.
+* Para esta demo se crearon solo 2 ejecutables teniendo en cuenta los departamentos de Montevideo y Tacuarembó.
